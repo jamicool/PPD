@@ -1,0 +1,433 @@
+{
+  "version": "1.0.0",
+  "projectTypes": {
+    "gas": {
+      "name": "Газопровод",
+      "description": "Системы транспортировки газа",
+      "elements": ["pump", "compressor", "valve", "tank", "pipe", "regulator", "filter"]
+    },
+    "oil": {
+      "name": "Нефтепровод",
+      "description": "Системы транспортировки нефти",
+      "elements": ["pump", "valve", "tank", "pipe", "heater", "separator", "meter"]
+    }
+  },
+  "elements": {
+    "pump": {
+      "name": "Насос",
+      "category": "equipment",
+      "icon": "⛽",
+      "color": "#e74c3c",
+      "geometry": {
+        "type": "circle",
+        "radius": 20
+      },
+      "defaultProperties": {
+        "name": "Насос",
+        "flowRate": 100,
+        "pressure": 10,
+        "status": "active",
+        "efficiency": 0.85
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "flowRate": {
+          "type": "number",
+          "label": "Расход (м³/ч)",
+          "min": 0,
+          "max": 1000
+        },
+        "pressure": {
+          "type": "number",
+          "label": "Давление (бар)",
+          "min": 0,
+          "max": 100
+        },
+        "status": {
+          "type": "select",
+          "label": "Статус",
+          "options": [
+            { "value": "active", "label": "Активен" },
+            { "value": "standby", "label": "Резерв" },
+            { "value": "maintenance", "label": "Обслуживание" }
+          ]
+        },
+        "efficiency": {
+          "type": "number",
+          "label": "КПД",
+          "min": 0,
+          "max": 1,
+          "step": 0.01
+        }
+      }
+    },
+    "valve": {
+      "name": "Клапан",
+      "category": "valves",
+      "icon": "🎛️",
+      "color": "#f39c12",
+      "geometry": {
+        "type": "circle",
+        "radius": 20
+      },
+      "defaultProperties": {
+        "name": "Клапан",
+        "status": "open",
+        "flowCoefficient": 0.8
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "status": {
+          "type": "select",
+          "label": "Статус",
+          "options": [
+            { "value": "open", "label": "Открыт" },
+            { "value": "closed", "label": "Закрыт" },
+            { "value": "partial", "label": "Частично открыт" }
+          ]
+        },
+        "flowCoefficient": {
+          "type": "number",
+          "label": "Коэффициент расхода",
+          "min": 0,
+          "max": 1,
+          "step": 0.01
+        }
+      }
+    },
+    "tank": {
+      "name": "Резервуар",
+      "category": "storage",
+      "icon": "🛢️",
+      "color": "#27ae60",
+      "geometry": {
+        "type": "circle",
+        "radius": 25
+      },
+      "defaultProperties": {
+        "name": "Резервуар",
+        "capacity": 1000,
+        "level": 50,
+        "pressure": 5
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "capacity": {
+          "type": "number",
+          "label": "Емкость (м³)",
+          "min": 0
+        },
+        "level": {
+          "type": "number",
+          "label": "Уровень (%)",
+          "min": 0,
+          "max": 100
+        },
+        "pressure": {
+          "type": "number",
+          "label": "Давление (бар)",
+          "min": 0,
+          "max": 50
+        }
+      }
+    },
+    "pipe": {
+      "name": "Труба",
+      "category": "piping",
+      "icon": "📏",
+      "color": "#3498db",
+      "geometry": {
+        "type": "line",
+        "length": 100
+      },
+      "defaultProperties": {
+        "name": "Труба",
+        "diameter": 100,
+        "length": 10,
+        "roughness": 0.001,
+        "material": "steel",
+        "endX": 200,
+        "endY": 100
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "diameter": {
+          "type": "number",
+          "label": "Диаметр (мм)",
+          "min": 1,
+          "max": 1000
+        },
+        "length": {
+          "type": "number",
+          "label": "Длина (м)",
+          "min": 0.1,
+          "step": 0.1
+        },
+        "roughness": {
+          "type": "number",
+          "label": "Шероховатость (мм)",
+          "min": 0,
+          "step": 0.001
+        },
+        "material": {
+          "type": "select",
+          "label": "Материал",
+          "options": [
+            { "value": "steel", "label": "Сталь" },
+            { "value": "copper", "label": "Медь" },
+            { "value": "plastic", "label": "Пластик" },
+            { "value": "composite", "label": "Композит" }
+          ]
+        }
+      }
+    },
+    "compressor": {
+      "name": "Компрессор",
+      "category": "equipment",
+      "icon": "🌀",
+      "color": "#9b59b6",
+      "geometry": {
+        "type": "circle",
+        "radius": 20
+      },
+      "defaultProperties": {
+        "name": "Компрессор",
+        "pressureRatio": 3,
+        "flowRate": 500,
+        "status": "active"
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "pressureRatio": {
+          "type": "number",
+          "label": "Степень сжатия",
+          "min": 1,
+          "max": 10,
+          "step": 0.1
+        },
+        "flowRate": {
+          "type": "number",
+          "label": "Расход (м³/ч)",
+          "min": 0
+        },
+        "status": {
+          "type": "select",
+          "label": "Статус",
+          "options": [
+            { "value": "active", "label": "Активен" },
+            { "value": "standby", "label": "Резерв" },
+            { "value": "maintenance", "label": "Обслуживание" }
+          ]
+        }
+      }
+    },
+    "regulator": {
+      "name": "Регулятор",
+      "category": "valves",
+      "icon": "📊",
+      "color": "#1abc9c",
+      "geometry": {
+        "type": "circle",
+        "radius": 18
+      },
+      "defaultProperties": {
+        "name": "Регулятор",
+        "setpoint": 5,
+        "range": 10
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "setpoint": {
+          "type": "number",
+          "label": "Уставка (бар)",
+          "min": 0
+        },
+        "range": {
+          "type": "number",
+          "label": "Диапазон (бар)",
+          "min": 0
+        }
+      }
+    },
+    "filter": {
+      "name": "Фильтр",
+      "category": "equipment",
+      "icon": "🧹",
+      "color": "#95a5a6",
+      "geometry": {
+        "type": "circle",
+        "radius": 18
+      },
+      "defaultProperties": {
+        "name": "Фильтр",
+        "efficiency": 0.95,
+        "pressureDrop": 0.2
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "efficiency": {
+          "type": "number",
+          "label": "Эффективность",
+          "min": 0,
+          "max": 1,
+          "step": 0.01
+        },
+        "pressureDrop": {
+          "type": "number",
+          "label": "Перепад давления (бар)",
+          "min": 0
+        }
+      }
+    },
+    "heater": {
+      "name": "Подогреватель",
+      "category": "equipment",
+      "icon": "🔥",
+      "color": "#e67e22",
+      "geometry": {
+        "type": "circle",
+        "radius": 22
+      },
+      "defaultProperties": {
+        "name": "Подогреватель",
+        "temperature": 60,
+        "power": 100
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "temperature": {
+          "type": "number",
+          "label": "Температура (°C)",
+          "min": 0,
+          "max": 200
+        },
+        "power": {
+          "type": "number",
+          "label": "Мощность (кВт)",
+          "min": 0
+        }
+      }
+    },
+    "separator": {
+      "name": "Сепаратор",
+      "category": "equipment",
+      "icon": "💧",
+      "color": "#3498db",
+      "geometry": {
+        "type": "circle",
+        "radius": 23
+      },
+      "defaultProperties": {
+        "name": "Сепаратор",
+        "efficiency": 0.98,
+        "throughput": 100
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "efficiency": {
+          "type": "number",
+          "label": "Эффективность",
+          "min": 0,
+          "max": 1,
+          "step": 0.01
+        },
+        "throughput": {
+          "type": "number",
+          "label": "Пропускная способность (м³/ч)",
+          "min": 0
+        }
+      }
+    },
+    "meter": {
+      "name": "Счетчик",
+      "category": "instrumentation",
+      "icon": "📈",
+      "color": "#2ecc71",
+      "geometry": {
+        "type": "circle",
+        "radius": 16
+      },
+      "defaultProperties": {
+        "name": "Счетчик",
+        "accuracy": 0.5,
+        "range": 1000
+      },
+      "propertySchema": {
+        "name": {
+          "type": "string",
+          "label": "Название",
+          "required": true
+        },
+        "accuracy": {
+          "type": "number",
+          "label": "Точность (%)",
+          "min": 0,
+          "max": 100
+        },
+        "range": {
+          "type": "number",
+          "label": "Диапазон (м³/ч)",
+          "min": 0
+        }
+      }
+    }
+  },
+  "categories": {
+    "equipment": {
+      "name": "Оборудование",
+      "order": 1
+    },
+    "valves": {
+      "name": "Арматура",
+      "order": 2
+    },
+    "storage": {
+      "name": "Резервуары",
+      "order": 3
+    },
+    "piping": {
+      "name": "Трубопроводы",
+      "order": 4
+    },
+    "instrumentation": {
+      "name": "КИПиА",
+      "order": 5
+    }
+  }
+}
